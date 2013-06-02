@@ -1,0 +1,33 @@
+application: gae-site
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /_a
+  static_files: admin/index.html
+  upload: admin/index.html
+  login: admin
+
+- url: /app.coffee
+  static_files: admin/app.coffee
+  upload: admin/app.coffee
+  login: admin
+
+- url: /_s/.*
+  script: main.app
+  login: admin
+
+- url: /(.*\.(css|ico|js|png|txt|xml))
+  static_files: public/\1
+  upload: public/(.*\.(css|ico|js|png|txt|xml))
+
+- url: .*
+  script: main.app
+
+libraries:
+- name: webapp2
+  version: "latest"
+- name: jinja2
+  version: "latest"
