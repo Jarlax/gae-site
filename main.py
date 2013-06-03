@@ -9,6 +9,9 @@ app = webapp2.WSGIApplication([
                   methods=['GET']),
     webapp2.Route(r'/_s/page/<key:%s>' % np, AdminHandler,
                   methods=['GET', 'PUT', 'DELETE']),
+    webapp2.Route(r'/_s/page', AdminHandler, methods=['POST']),
+    webapp2.Route(r'/_s/img', AdminHandler, handler_method='img',
+                  methods=['POST']),
     webapp2.Route(r'/<key:%s\.(jpg|png)>' % np, ImageHandler, methods=['GET']),
     webapp2.Route(r'/<key:%s>' % np, PublicHandler, methods=['GET']),
     webapp2.Route(r'/', PublicHandler, methods=['GET'])

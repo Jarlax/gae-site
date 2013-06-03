@@ -9,6 +9,15 @@
     <script type="text/coffeescript" src="app.coffee"></script>
 </head>
 <body>
-
+    <h1>POST image test</h1>
+    <form action="/_s/img" method="POST" enctype="multipart/form-data">
+        <fieldset>
+            <p>
+                <label for="image">Image:</label>
+                <input type="file" id="image" name="image"/>
+            </p>
+            <input type="submit"/>
+        </fieldset>
+    </form>
 </body>
 </html>
