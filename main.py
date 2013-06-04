@@ -1,9 +1,7 @@
 from admin import AdminHandler
 from public import PublicHandler, ImageHandler
+from util import image_pattern, name_pattern
 import webapp2
-
-name_pattern = '[_a-z0-9]+'  # Name pattern
-image_pattern = '%s\.(jpe?g|png)' % name_pattern # Image name pattern
 
 app = webapp2.WSGIApplication([
     webapp2.Route(r'/_s/pages', AdminHandler, handler_method='list',
