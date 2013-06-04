@@ -19,9 +19,9 @@ handlers:
   script: main.app
   login: admin
 
-- url: /(.*\.(css|ico|js|png|txt|xml))
+- url: /(.*\.(css|ico|js|txt|xml))
   static_files: public/\1
-  upload: public/(.*\.(css|ico|js|png|txt|xml))
+  upload: public/(.*\.(css|ico|js|txt|xml))
 
 - url: .*
   script: main.app
