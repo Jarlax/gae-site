@@ -8,8 +8,11 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.2/coffee-script.min.js"></script>
     <script type="text/coffeescript" src="app.coffee"></script>
 </head>
-<body>
-    <h1>POST image test</h1>
+<body ng-controller="Admin">
+    <p>Name: <input ng-model="page.name"/></p>
+    <p>Content: <input ng-model="page.content"/></p>
+    <p>Template: <input ng-model="page.template"/></p>
+    <input type="button" ng-click="save()"/>
     <form action="/_s/img" method="POST" enctype="multipart/form-data">
         <fieldset>
             <p>
