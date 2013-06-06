@@ -7,6 +7,7 @@ class Page(ndb.Model):
     content = ndb.StringProperty()
     template = ndb.StringProperty()
     image = ndb.BlobProperty()
+    image_type = ndb.StringProperty()
     children = ndb.StringProperty(repeated=True)
 
     def toJson(self):

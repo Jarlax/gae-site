@@ -41,6 +41,7 @@ class AdminHandler(webapp2.RequestHandler):
             page.mergeProps(props)
             image = self.request.get('image')
             if image:
+                page.image_type = self.__get_ext()
                 page.image = image
             page.put()
             return True
@@ -48,9 +49,7 @@ class AdminHandler(webapp2.RequestHandler):
             return False
 
     def __create_model(self, props):
-        name = props['name']
-        ext = self.__get_ext()
-        page_id = get_id_by_name(name, ext)
+        page_id = get_id_by_name(props['name'])
         return Page(id=page_id)
 
     def __get_ext(self):
