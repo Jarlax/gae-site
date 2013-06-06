@@ -1,13 +1,34 @@
+@image_file = null
+
 Admin = ($scope, $http) ->
-  $scope.key = 'test'
+  submit = (method, url) ->
+    $http
+      method: method,
+      url: url,
+      headers:
+        'Content-Type': false
+      transformRequest: (data) ->
+        formData = new FormData()
+        formData.append 'data', angular.toJson data.page
+        if data.image
+          formData.append 'image', data.image
+        formData
+      data:
+        page: $scope.page
+        image: image_file
+
+  $scope.id = 'test'
+  $scope.page =
+    name: '1',
+    content: '2'
   $scope.post = ->
-    $http.post '_s/page', angular.toJson($scope.page)
+    submit 'POST', '_s/page'
   $scope.put = ->
-    $http.put '_s/page/' + $scope.key, angular.toJson($scope.page)
+    submit 'PUT', '_s/page/' + $scope.id
   $scope.delete = ->
-    $http.delete '_s/page/' + $scope.key
+    $http.delete '_s/page/' + $scope.id
   $scope.get = ->
-    $http.get('_s/page/' + $scope.key).success (resp) ->
+    $http.get('_s/page/' + $scope.id).success (resp) ->
       $scope.page = resp
 
 # Angular bootstrap

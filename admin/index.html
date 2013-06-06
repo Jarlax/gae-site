@@ -9,22 +9,14 @@
     <script type="text/coffeescript" src="app.coffee"></script>
 </head>
 <body ng-controller="Admin">
-    <p>Key: <input ng-model="key"/></p>
+    <p>ID: <input ng-model="id"/></p>
     <p>Name: <input ng-model="page.name"/></p>
     <p>Content: <input ng-model="page.content"/></p>
     <p>Template: <input ng-model="page.template"/></p>
+    <p>Image: <input type="file" id="image" name="image" onchange="image_file = this.files[0]"/></p>
     <input type="button" ng-click="post()" value="Post"/>
     <input type="button" ng-click="put()" value="Put"/>
     <input type="button" ng-click="delete()" value="Delete"/>
     <input type="button" ng-click="get()" value="Get"/>
-    <form action="/_s/img" method="POST" enctype="multipart/form-data">
-        <fieldset>
-            <p>
-                <label for="image">Image:</label>
-                <input type="file" id="image" name="image"/>
-            </p>
-            <input type="submit"/>
-        </fieldset>
-    </form>
 </body>
 </html>

@@ -15,8 +15,7 @@ class Page(ndb.Model):
             props['id'] = self.key.string_id()
         return json.dumps(props)
 
-    def mergeJson(self, json_str):
-        props = json.loads(json_str)
+    def mergeProps(self, props):
         for v in props:
             setattr(self, v, props[v])
 
