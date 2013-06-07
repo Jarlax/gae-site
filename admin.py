@@ -1,7 +1,7 @@
 import json
+from mimetypes import guess_type
 import webapp2
 from model import Page
-from util import get_id_by_name, get_img_type
 
 
 class AdminHandler(webapp2.RequestHandler):
@@ -17,42 +17,27 @@ class AdminHandler(webapp2.RequestHandler):
 
     def put(self, page_id):
         page = Page.get_by_id(page_id)
+        ok = 200
         if not page:
-            self.error(404)
-        elif not self.__do_save(page):
-            self.error(400)
-
-    def post(self):
-        if self.__do_save():
-            self.response.status = 201
-        else:
+            page, ok = Page(id=page_id), 201
+        try:
+            json_data = self.request.get('data')
+            props = json.loads(json_data)
+            page.mergeProps(props)
+            self.__set_file(page)
+            page.put()
+            self.response.status = ok
+        except ValueError:
             self.error(400)
 
     def delete(self, page_id):
         page = Page.get_by_id(page_id)
         page.key.delete()
 
-    def __do_save(self, page=None):
-        try:
-            json_data = self.request.get('data')
-            props = json.loads(json_data)
-            if not page:
-                page = self.__create_model(props)
-            page.mergeProps(props)
-            image = self.request.get('image')
-            if image:
-                page.image_type = self.__get_ext()
-                page.image = image
-            page.put()
-            return True
-        except:  # TODO: Add nicer exception handling
-            return False
-
-    def __create_model(self, props):
-        page_id = get_id_by_name(props['name'])
-        return Page(id=page_id)
-
-    def __get_ext(self):
-        image_file = self.request.params.get('image', None)
-        if image_file is not None:
-            return get_img_type(image_file.filename)
+    def __set_file(self, page):
+        file_content = self.request.get('file')
+        if file_content:
+            file_param = self.request.params.get('file', None)
+            if file_param:
+                page.file_type, enc = guess_type(file_param.filename)
+            page.file_content = file_content
