@@ -13,7 +13,9 @@ class AdminHandler(webapp2.RequestHandler):
             self.error(404)
 
     def list(self):
-        self.response.write('ADMIN LIST')
+        exclude = ['content', 'children']
+        json_data = json.dumps([p.to_props(exclude) for p in Page.query()])
+        self.response.write(json_data)
 
     def put(self, page_id):
         page = Page.get_by_id(page_id)

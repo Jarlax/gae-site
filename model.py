@@ -10,11 +10,17 @@ class Page(ndb.Model):
     file_type = ndb.StringProperty()
     children = ndb.StringProperty(repeated=True)
 
-    def toJson(self):
-        props = self.to_dict(exclude=['file_content', 'file_content'])
+    def to_props(self, exclude=None):
+        exclude_props = ['file_content', 'file_type']
+        if exclude:
+            exclude_props += exclude
+        props = self.to_dict(exclude=exclude_props)
         if self.key:
             props['id'] = self.key.string_id()
-        return json.dumps(props)
+        return props
+
+    def toJson(self):
+        return json.dumps(self.to_props())
 
     def mergeProps(self, props):
         for v in props:
