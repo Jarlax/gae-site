@@ -14,7 +14,7 @@ class AdminHandler(webapp2.RequestHandler):
 
     def list(self):
         exclude = ['content', 'children']
-        json_data = json.dumps([p.to_props(exclude) for p in Page.query()])
+        json_data = json.dumps([p.to_props(exclude) for p in Page.query().order(-Page.created_on)])
         self.response.write(json_data)
 
     def put(self, page_id):

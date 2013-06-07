@@ -9,12 +9,14 @@ class Page(ndb.Model):
     file_content = ndb.BlobProperty()
     file_type = ndb.StringProperty()
     children = ndb.StringProperty(repeated=True)
+    created_on = ndb.DateTimeProperty(auto_now=True)
 
     def to_props(self, exclude=None):
         exclude_props = ['file_content', 'file_type']
         if exclude:
             exclude_props += exclude
         props = self.to_dict(exclude=exclude_props)
+        props['created_on'] = str(props['created_on'])
         if self.key:
             props['id'] = self.key.string_id()
         return props
