@@ -14,7 +14,8 @@ class AdminHandler(webapp2.RequestHandler):
 
     def list(self):
         exclude = ['content', 'children']
-        json_data = json.dumps([p.to_props(exclude) for p in Page.query().order(-Page.created_on)])
+        query = Page.query().order(-Page.created_on)
+        json_data = json.dumps([p.to_props(exclude) for p in query])
         self.response.write(json_data)
 
     def put(self, page_id):
@@ -37,7 +38,7 @@ class AdminHandler(webapp2.RequestHandler):
     def __set_file(self, page):
         file_content = self.request.get('file')
         if file_content:
+            page.file_content = file_content
             file_param = self.request.params.get('file', None)
             if file_param:
                 page.file_type, enc = guess_type(file_param.filename)
-            page.file_content = file_content
