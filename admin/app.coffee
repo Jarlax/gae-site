@@ -1,8 +1,12 @@
 @file_obj = null
 
 Admin = ($scope, $http) ->
+  list = ->
+    $http.get('_s/pages').success (data) ->
+      $scope.pages = data
+  list()
   $scope.put = ->
-    $http
+    $http(
       method: 'PUT',
       url: '_s/page/' + $scope.page.id,
       headers:
@@ -15,9 +19,10 @@ Admin = ($scope, $http) ->
         formData
       data:
         page: $scope.page
-        file: file_obj
+        file: file_obj).success -> list()
   $scope.delete = ->
-    $http.delete '_s/page/' + $scope.page.id
+    $http.delete('_s/page/' + $scope.page.id).success = ->
+      list()
   $scope.get = ->
     $http.get('_s/page/' + $scope.page.id).success (resp) ->
       $scope.page = resp

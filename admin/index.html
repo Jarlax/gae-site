@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <title>Admin</title>
@@ -9,13 +9,20 @@
     <script type="text/coffeescript" src="app.coffee"></script>
 </head>
 <body ng-controller="Admin">
-    <p>ID: <input ng-model="page.id"/></p>
-    <p>Name: <input ng-model="page.name"/></p>
-    <p>Content: <input ng-model="page.content"/></p>
-    <p>Template: <input ng-model="page.template"/></p>
-    <p>Image: <input type="file" id="image" name="image" onchange="file_obj = this.files[0]"/></p>
-    <input type="button" ng-click="put()" value="Put"/>
-    <input type="button" ng-click="delete()" value="Delete"/>
-    <input type="button" ng-click="get()" value="Get"/>
+    <ul>
+        <li ng-repeat="page in pages">
+            {{page.id}}
+        </li>
+    </ul>
+    <form name="form">
+        <p>ID: <input ng-model="page.id" required /></p>
+        <p>Name: <input ng-model="page.name" required /></p>
+        <p>Content: <input ng-model="page.content"/></p>
+        <p>Template: <input ng-model="page.template"/></p>
+        <p>Image: <input type="file" id="image" name="image" onchange="file_obj = this.files[0]"/></p>
+        <button ng-click="put()" ng-disabled="form.$invalid">Put</button>
+        <button ng-click="delete()">Delete</button>
+        <button ng-click="get()">Get</button>
+    </form>
 </body>
 </html>
