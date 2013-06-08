@@ -1,10 +1,13 @@
 @file_obj = null
 
 Admin = ($scope, $http) ->
+  $scope.templates = ['Main', 'Blog', 'Image', 'Image Collection']
   list = ->
     $http.get('_s/pages').success (data) ->
       $scope.pages = data
   list()
+  $scope.setTemplate = (val) ->
+    $scope.template = val
   $scope.put = ->
     $http(
       method: 'PUT',

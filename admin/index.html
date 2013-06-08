@@ -7,19 +7,34 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.2/coffee-script.min.js"></script>
     <script type="text/coffeescript" src="app.coffee"></script>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
 </head>
 <body ng-controller="Admin">
+
     <ul>
         <li ng-repeat="page in pages">
             {{page.id}}
         </li>
     </ul>
-    <form name="form">
-        <p>ID: <input ng-model="page.id" required /></p>
-        <p>Name: <input ng-model="page.name" required /></p>
-        <p>Content: <input ng-model="page.content"/></p>
-        <p>Template: <input ng-model="page.template"/></p>
-        <p>Image: <input type="file" id="image" name="image" onchange="file_obj = this.files[0]"/></p>
+    <form name="form" novalidate accept-charset="utf-8">
+        <div class="btn-group">
+            <button ng-repeat="name in templates"
+                    ng-init="id=name.replace(' ', '_').toLowerCase()"
+                    class="btn btn-info"
+                    ng-click="setTemplate(id)"
+                    value="{{id}}">
+                {{name}}
+            </button>
+        </div>
+        <label>
+            ID: <input ng-model="page.id" required />
+        </label>
+        <label>
+            Content: <input ng-model="page.content"/>
+        </label>
+        <label>
+            File: <input type="file" onchange="file_obj = this.files[0]"/>
+        </label>
         <button ng-click="put()" ng-disabled="form.$invalid">Put</button>
         <button ng-click="delete()">Delete</button>
         <button ng-click="get()">Get</button>
