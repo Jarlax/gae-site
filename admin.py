@@ -19,16 +19,14 @@ class AdminHandler(webapp2.RequestHandler):
 
     def put(self, page_id):
         page = Page.get_by_id(page_id)
-        ok = 200
         if not page:
-            page, ok = Page(id=page_id), 201
+            page = Page(id=page_id)
         try:
             json_data = self.request.get('data')
             props = json.loads(json_data)
             page.mergeProps(props)
             self.__set_file(page)
             page.put()
-            self.response.status = ok
         except ValueError:
             self.error(400)
 
