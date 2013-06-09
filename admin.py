@@ -1,5 +1,6 @@
 import json
 from mimetypes import guess_type
+from google.appengine.api import users
 import webapp2
 from model import Page
 
@@ -34,6 +35,9 @@ class AdminHandler(webapp2.RequestHandler):
     def delete(self, page_id):
         page = Page.get_by_id(page_id)
         page.key.delete()
+
+    def log_out_url(self):
+        self.response.write(users.create_logout_url('/'))
 
     def __set_file(self, page):
         file_content = self.request.get('file')
