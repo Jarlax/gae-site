@@ -1,13 +1,20 @@
 @file_obj = null
 
 Admin = ($scope, $http) ->
-  $scope.templates = ['Main', 'Blog', 'Image', 'Image Collection']
+  $scope.templates = [
+    {id:'main', title:'Main Site Entry', icon:'icon-home'},
+    {id:'blog', title:'Blog Post', icon:'icon-pencil'},
+    {id:'img', title:'Image', icon:'icon-picture'},
+    {id:'img_coll', title:'Image Collection', icon:'icon-th-large'}
+  ]
+  $http.get('_s/logout-url').success (url) ->
+    $scope.logout_url = url
   list = ->
     $http.get('_s/pages').success (data) ->
       $scope.pages = data
   list()
-  $scope.setTemplate = (val) ->
-    $scope.template = val
+  $scope.createPage = (val) ->
+    alert val
   $scope.put = ->
     $http(
       method: 'PUT',

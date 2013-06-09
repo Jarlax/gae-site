@@ -7,27 +7,40 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.2/coffee-script.min.js"></script>
     <script type="text/coffeescript" src="app.coffee"></script>
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
 </head>
 <body ng-controller="Admin">
-
+    <div class="navbar navbar-inverse navbar-static-top">
+        <div class="navbar-inner">
+            <div class="brand">Create page</div> <!--TODO fix hover-->
+            <ul class="nav">
+                <li ng-repeat="t in templates">
+                    <a href="" ng-click="createPage(t.id)">
+                        <i class="icon-white" ng-class="t.icon"></i> {{t.title}}
+                    </a>
+                </li>
+                <!--<li class="divider-vertical"></li>-->
+            </ul>
+            <ul class="nav pull-right">
+                <li>
+                    <a href="{{logout_url}}">
+                        <i class="icon-share icon-white"></i> Log Out
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
     <ul>
         <li ng-repeat="page in pages">
             {{page.id}}
         </li>
     </ul>
     <form name="form" novalidate accept-charset="utf-8">
-        <div class="btn-group">
-            <button ng-repeat="name in templates"
-                    ng-init="id=name.replace(' ', '_').toLowerCase()"
-                    class="btn btn-info"
-                    ng-click="setTemplate(id)"
-                    value="{{id}}">
-                {{name}}
-            </button>
-        </div>
         <label>
             ID: <input ng-model="page.id" required />
+        </label>
+        <label>
+            Name: <input ng-model="page.name" required />
         </label>
         <label>
             Content: <input ng-model="page.content"/>
