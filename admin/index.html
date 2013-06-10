@@ -12,7 +12,6 @@
 <body ng-controller="Admin">
 <div class="navbar navbar-inverse navbar-static-top">
     <div class="navbar-inner">
-
         <div class="brand">Create page</div> <!--TODO fix hover-->
         <ul class="nav">
             <li ng-repeat="t in templates">
@@ -31,8 +30,7 @@
         </ul>
     </div>
 </div>
-
-<div class="container-fluid">
+<div class="container-fluid" style="padding-top:20px">
     <div class="row-fluid">
         <div class="well span2">
             <ul>
@@ -56,7 +54,7 @@
                         <label for="page_file">
                             File
                         </label>
-                        <input id="page_file" type="file" onchange="file_obj = this.files[0]"/>
+                        <input id="page_file" type="file" accept="image/*" onchange="file_obj = this.files[0]"/>
                     </div>
                     <div class="span8">
                         <label for="page_content">
