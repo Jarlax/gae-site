@@ -35,22 +35,45 @@
             {{page.id}}
         </li>
     </ul>
-    <form name="form" novalidate accept-charset="utf-8">
-        <label>
-            ID: <input ng-model="page.id" required />
-        </label>
-        <label>
-            Name: <input ng-model="page.name" required />
-        </label>
-        <label>
-            Content: <input ng-model="page.content"/>
-        </label>
-        <label>
-            File: <input type="file" onchange="file_obj = this.files[0]"/>
-        </label>
-        <button ng-click="put()" ng-disabled="form.$invalid">Put</button>
-        <button ng-click="delete()">Delete</button>
-        <button ng-click="get()">Get</button>
+    <form name="form" class="form-horizontal" novalidate accept-charset="utf-8">
+        <div class="control-group">
+            <label for="page_id" class="control-label">
+                ID
+            </label>
+            <div class="controls">
+                <input id="page_id" ng-model="page.id" required />
+                <span class="help-inline">Unique identifier of the page</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="page_name" class="control-label">
+                Name
+            </label>
+            <div class="controls">
+                <input id="page_name" ng-model="page.name" required />
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="page_content" class="control-label">
+                Content
+            </label>
+            <div class="controls">
+                <textarea id="page_content" ng-model="page.content" rows="10" ></textarea>
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="page_file" class="control-label">
+                File
+            </label>
+            <div class="controls">
+                <input id="page_file" type="file" onchange="file_obj = this.files[0]"/>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary" ng-click="put()" ng-disabled="form.$invalid">Put</button>
+            <button class="btn btn-primary" ng-click="delete()">Delete</button>
+            <button class="btn btn-primary" ng-click="get()">Get</button>
+        </div>
     </form>
 </body>
 </html>
