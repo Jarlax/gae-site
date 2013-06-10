@@ -2,8 +2,7 @@
 
 Admin = ($scope, $http) ->
   $scope.templates = [
-    {id:'main', title:'Main Site Entry', icon:'icon-home'},
-    {id:'blog', title:'Blog Post', icon:'icon-pencil'},
+    {id:'text', title:'Text Post', icon:'icon-pencil'},
     {id:'img', title:'Image', icon:'icon-picture'},
     {id:'img_coll', title:'Image Collection', icon:'icon-th-large'}
   ]
