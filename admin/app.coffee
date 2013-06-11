@@ -11,6 +11,7 @@ Admin = ($scope, $http) ->
   list = ->
     $http.get('_s/pages').success (data) ->
       $scope.pages = data
+      $scope.$apply();
   list()
   $scope.createPage = (val) ->
     alert val
@@ -30,7 +31,7 @@ Admin = ($scope, $http) ->
         page: $scope.page
         file: file_obj).success -> list()
   $scope.delete = ->
-    $http.delete('_s/page/' + $scope.page.id).success = ->
+    $http.delete('_s/page/' + $scope.page.id).success ->
       list()
   $scope.get = ->
     $http.get('_s/page/' + $scope.page.id).success (resp) ->
