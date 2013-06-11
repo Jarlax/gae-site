@@ -28,13 +28,15 @@ class AdminHandler(webapp2.RequestHandler):
             props = json.loads(json_data)
             page.mergeProps(props)
             self.__set_file(page)
-            page.put()
         except ValueError:
             self.error(400)
 
     def delete(self, page_id):
         page = Page.get_by_id(page_id)
-        page.key.delete()
+        if page:
+            page.key.delete()
+        else:
+            self.error(404)
 
     def log_out_url(self):
         self.response.write(users.create_logout_url('/'))
