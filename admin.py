@@ -1,11 +1,14 @@
 import json
 from mimetypes import guess_type
 from google.appengine.api import users
+from google.appengine.ext import ndb
 import webapp2
 from model import Page
 
 
 class AdminHandler(webapp2.RequestHandler):
+    master_page_key = ndb.Key(Page, 'master')
+
     def get(self, page_id):
         page = Page.get_by_id(page_id)
         if page:
@@ -15,24 +18,25 @@ class AdminHandler(webapp2.RequestHandler):
 
     def list(self):
         exclude = ['content', 'children']
-        query = Page.query().order(-Page.created_on)
+        query = Page.query(ancestor=self.master_page_key).order(-Page.created_on).fetch()
         json_data = json.dumps([p.to_props(exclude) for p in query])
         self.response.write(json_data)
 
     def put(self, page_id):
         page = Page.get_by_id(page_id)
         if not page:
-            page = Page(id=page_id)
+            page = Page(id=page_id, parent=self.master_page_key)
         try:
             json_data = self.request.get('data')
             props = json.loads(json_data)
             page.mergeProps(props)
             self.__set_file(page)
+            page.put()
         except ValueError:
             self.error(400)
 
     def delete(self, page_id):
-        page = Page.get_by_id(page_id)
+        page = Page.get_by_id(page_id, parent=self.master_page_key)
         if page:
             page.key.delete()
         else:
