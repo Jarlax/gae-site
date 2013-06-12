@@ -15,6 +15,8 @@ Admin = ($scope, $http) ->
   $scope.createPage = (val) ->
     $scope.page =
       template: val
+  $scope.getIcon = (templ) ->
+    $scope.templates[templ].icon
   $scope.put = ->
     $http(
       method: 'PUT',
