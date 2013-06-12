@@ -1,11 +1,10 @@
 @file_obj = null
 
 Admin = ($scope, $http) ->
-  $scope.templates = [
-    {id:'text', title:'Text Post', icon:'icon-pencil'},
-    {id:'img', title:'Image', icon:'icon-picture'},
-    {id:'img_coll', title:'Image Collection', icon:'icon-th-large'}
-  ]
+  $scope.templates =
+    'text': {title:'Text Post', icon:'icon-pencil'},
+    'img': {title:'Image', icon:'icon-picture'},
+    'img_coll': {title:'Image Collection', icon:'icon-th-large'}
   $http.get('_s/logout-url').success (url) ->
     $scope.logout_url = url
   list = ->

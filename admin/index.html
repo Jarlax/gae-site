@@ -14,8 +14,8 @@
     <div class="navbar-inner">
         <div class="brand">Create page</div> <!--TODO fix hover-->
         <ul class="nav">
-            <li ng-repeat="t in templates">
-                <a href="" ng-click="createPage(t.id)">
+            <li ng-repeat="(id, t) in templates">
+                <a href="" ng-click="createPage(id)">
                     <i class="icon-white" ng-class="t.icon"></i> {{t.title}}
                 </a>
             </li>
