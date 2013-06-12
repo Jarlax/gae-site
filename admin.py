@@ -10,7 +10,7 @@ class AdminHandler(webapp2.RequestHandler):
     master_page_key = ndb.Key(Page, 'master')
 
     def get(self, page_id):
-        page = Page.get_by_id(page_id)
+        page = Page.get_by_id(page_id, parent=self.master_page_key)
         if page:
             self.response.write(page.toJson())
         else:
