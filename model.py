@@ -12,11 +12,11 @@ class Page(ndb.Model):
     created_on = ndb.DateTimeProperty(auto_now=True)
 
     def to_props(self, exclude=None):
-        exclude_props = ['file_content', 'file_type']
+        exclude_props = ['file_content', 'file_type', 'created_on']
         if exclude:
             exclude_props += exclude
         props = self.to_dict(exclude=exclude_props)
-        props['created_on'] = str(props['created_on'])
+        props['created_date'] = str(self.created_on.date())
         if self.key:
             props['id'] = self.key.string_id()
         return props
