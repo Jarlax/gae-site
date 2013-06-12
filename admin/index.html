@@ -35,10 +35,13 @@
         <div class="sidebar-nav well span2">
             <ul class="nav nav-list">
                 <li ng-repeat="page in pages">
-                    <a href="">
-                        <i class="icon-black" ng-class="getIcon(page.template)"></i>
-                        {{page.name}}
-                    </a>
+                    <span>
+                        <a href="" ng-click="get(page.id)">
+                            <i class="icon-black" ng-class="getIcon(page.template)"></i>
+                            {{page.name}}
+                        </a>
+                        <a href="" ng-click="delete(page.id)">Delete</a>
+                    </span>
                 </li>
             </ul>
         </div>
@@ -58,9 +61,7 @@
                         <textarea id="page_content" ng-model="page.content" placeholder="Content" class="span12" rows="10">
                         </textarea>
                         <div class="btn-group pull-right">
-                            <button class="btn btn-primary" ng-click="put()" ng-disabled="form.$invalid">Put</button>
-                            <button class="btn btn-primary" ng-click="delete()">Delete</button>
-                            <button class="btn btn-primary" ng-click="get()">Get</button>
+                            <button class="btn btn-primary" ng-click="put()" ng-disabled="form.$invalid">Save</button>
                         </div>
                     </div>
                 </div>

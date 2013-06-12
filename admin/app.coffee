@@ -32,11 +32,11 @@ Admin = ($scope, $http) ->
       data:
         page: $scope.page
         file: file_obj).success -> list()
-  $scope.delete = ->
-    $http.delete('_s/page/' + $scope.page.id).success ->
+  $scope.delete = (id) ->
+    $http.delete('_s/page/' + id).success ->
       list()
-  $scope.get = ->
-    $http.get('_s/page/' + $scope.page.id).success (resp) ->
+  $scope.get = (id) ->
+    $http.get('_s/page/' + id).success (resp) ->
       $scope.page = resp
 
 # Angular bootstrap
