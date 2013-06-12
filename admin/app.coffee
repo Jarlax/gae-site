@@ -14,7 +14,8 @@ Admin = ($scope, $http) ->
       $scope.$apply();
   list()
   $scope.createPage = (val) ->
-    alert val
+    $scope.page =
+      template: val
   $scope.put = ->
     $http(
       method: 'PUT',
