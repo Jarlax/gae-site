@@ -4,7 +4,7 @@ from google.appengine.ext import ndb
 
 class Page(ndb.Model):
     name = ndb.StringProperty()
-    content = ndb.StringProperty()
+    content = ndb.StringProperty(indexed=False)
     template = ndb.StringProperty()
     file_content = ndb.BlobProperty()
     file_type = ndb.StringProperty()
