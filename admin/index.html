@@ -33,7 +33,9 @@
 <div class="container-fluid" style="padding-top:20px">
     <div class="row-fluid">
         <div class="sidebar-nav well well-small span3">
-            <input type="text" class="search-query" placeholder="Filter" ng-model="search.name">
+            <label>
+                <input type="text" class="search-query" placeholder="Filter" ng-model="search.name">
+            </label>
             <ul class="nav nav-list">
                 <li ng-repeat="page in pages | filter:search">
                     <div class="row-fluid">
@@ -42,15 +44,15 @@
                             {{page.name}}
                         </div>
                         <div class="span6 btn-group pagination-right">
-                            <button class="btn btn-mini btn-primary" ng-click="get(page.id)">Edit</button>
+                            <button class="btn btn-mini btn-info" ng-click="get(page.id)">Edit</button>
                             <button class="btn btn-mini btn-danger" ng-click="delete(page.id)">Delete</button>
                         </div>
                     </div>
                 </li>
             </ul>
         </div>
-        <div class="well well-small span9">
-            <form name="form" novalidate accept-charset="utf-8">
+        <div class="span9">
+            <form name="form" class="well well-small" novalidate accept-charset="utf-8">
                 <div class="row-fluid">
                     <div class="span2" style="min-width: 225px">
                         <label for="page_id"></label>
@@ -64,12 +66,15 @@
                         <label for="page_content"></label>
                         <textarea id="page_content" ng-model="page.content" placeholder="Content" class="span12" rows="10">
                         </textarea>
+
                         <div class="btn-group pull-right">
                             <button class="btn btn-primary" ng-click="put()" ng-disabled="form.$invalid">Save</button>
                         </div>
                     </div>
                 </div>
             </form>
+            <div ng-bind-html-unsafe="converter.makeHtml(page.content || '')">
+            </div>
         </div>
     </div>
 </div>

@@ -1,6 +1,7 @@
 @file_obj = null
 
 Admin = ($scope, $http) ->
+  $scope.converter = new Showdown.converter();
   $scope.templates =
     'text': {title:'Text Post', icon:'icon-pencil'},
     'img': {title:'Image', icon:'icon-picture'},
