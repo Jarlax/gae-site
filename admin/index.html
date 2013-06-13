@@ -33,8 +33,9 @@
 <div class="container-fluid" style="padding-top:20px">
     <div class="row-fluid">
         <div class="sidebar-nav well well-small span3">
+            <input type="text" class="search-query" placeholder="Filter" ng-model="search.name">
             <ul class="nav nav-list">
-                <li ng-repeat="page in pages">
+                <li ng-repeat="page in pages | filter:search">
                     <div class="row-fluid">
                         <div class="span6">
                             <i class="icon-black" ng-class="getIcon(page.template)"></i>
