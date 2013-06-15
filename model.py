@@ -11,10 +11,8 @@ class Page(ndb.Model):
     children = ndb.StringProperty(repeated=True)
     created_on = ndb.DateTimeProperty(auto_now=True)
 
-    def to_props(self, exclude=None):
+    def to_props(self):
         exclude_props = ['file_content', 'file_type', 'created_on']
-        if exclude:
-            exclude_props += exclude
         props = self.to_dict(exclude=exclude_props)
         props['created_date'] = str(self.created_on.date())
         if self.key:

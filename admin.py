@@ -17,12 +17,11 @@ class AdminHandler(webapp2.RequestHandler):
             self.error(404)
 
     def list(self):
-        exclude = ['content', 'children']
         query = Page.query(ancestor=self.master_page_key)\
             .order(-Page.created_on)\
             .fetch(projection=[Page.name, Page.created_on, Page.template])
 
-        json_data = json.dumps([p.to_props(exclude) for p in query])
+        json_data = json.dumps([p.to_props() for p in query])
         self.response.write(json_data)
 
     def put(self, page_id):
