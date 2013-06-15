@@ -18,7 +18,10 @@ class AdminHandler(webapp2.RequestHandler):
 
     def list(self):
         exclude = ['content', 'children']
-        query = Page.query(ancestor=self.master_page_key).order(-Page.created_on).fetch()
+        query = Page.query(ancestor=self.master_page_key)\
+            .order(-Page.created_on)\
+            .fetch(projection=[Page.name, Page.created_on, Page.template])
+
         json_data = json.dumps([p.to_props(exclude) for p in query])
         self.response.write(json_data)
 
