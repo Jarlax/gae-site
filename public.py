@@ -1,3 +1,4 @@
+from google.appengine.ext import ndb
 import jinja2
 import webapp2
 from model import Page
@@ -8,9 +9,19 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 
 class PublicHandler(webapp2.RequestHandler):
+    master_page_key = ndb.Key(Page, 'master')
+
     def get(self, page_id=''):
+        menu_pages = Page.query(ancestor=self.master_page_key)\
+            .fetch(projection=[Page.name])
+        print menu_pages
+        if not page_id and menu_pages:
+            page_id = menu_pages[0].key.string_id()
+        page = Page.get_by_id(page_id, parent=self.master_page_key)
         values = {
-            'model': page_id
+            'name': 'GAE Site',
+            'menu': menu_pages,
+            'page': page
         }
         template = JINJA_ENVIRONMENT.get_template('page.html')
         self.response.write(template.render(values))

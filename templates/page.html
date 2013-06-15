@@ -3,11 +3,25 @@
 <html>
 <head>
     <title>GAE Site</title> <!-- TODO get name from entity -->
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>
-        {{ model }}
-    </h1>
+<div class="navbar navbar-inverse navbar-static-top">
+    <div class="navbar-inner">
+        <div class="brand">{{ name }}</div> <!--TODO fix hover-->
+        <ul class="nav">
+            {% for page in menu %}
+            <li>
+                <a href="/{{page.key.string_id()}}">
+                    {{page.name}}
+                </a>
+            </li>
+            <li class="divider-vertical"></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{{page.content}}
 </body>
 </html>
 {% endautoescape %}
