@@ -1,1 +1,0 @@
-name_pattern = '[_a-z0-9]+'  # Name pattern

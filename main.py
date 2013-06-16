@@ -1,7 +1,8 @@
 from admin import AdminHandler
 from public import PublicHandler
-from util import name_pattern
 import webapp2
+
+name_pattern = '[_a-z0-9]+'  # Name pattern
 
 app = webapp2.WSGIApplication([
     webapp2.Route(r'/_s/pages', AdminHandler, handler_method='list',
