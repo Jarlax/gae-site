@@ -14,10 +14,11 @@ class PublicHandler(webapp2.RequestHandler):
     def get(self, page_id=''):
         menu_pages = Page.query(ancestor=self.master_page_key)\
             .fetch(projection=[Page.name])
-        print menu_pages
         if not page_id and menu_pages:
             page_id = menu_pages[0].key.string_id()
-        page = Page.get_by_id(page_id, parent=self.master_page_key)
+        page = Page()  # Empty object
+        if page_id:
+            page = Page.get_by_id(page_id, parent=self.master_page_key)
         values = {
             'name': 'GAE Site',
             'menu': menu_pages,
