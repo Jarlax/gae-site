@@ -59,6 +59,12 @@
                         <input id="page_id" ng-model="page.id" placeholder="Page unique identifier" required />
                         <label for="page_name"></label>
                         <input id="page_name" ng-model="page.name" placeholder="Page name" required />
+                        <label for="page_description"></label>
+                        <textarea id="page_description" ng-model="page.description" placeholder="Description"
+                                  title="A page's description meta tag gives Google and other search engines a summary of what the page is about">
+                        </textarea>
+                        <label for="page_keywords"></label>
+                        <input id="page_keywords" ng-model="page.keywords" placeholder="Comma separated keywords"/>
                         <label for="page_file"></label>
                         <input id="page_file" type="file" accept="image/*" onchange="file_obj = this.files[0]"/>
                     </div>

@@ -5,10 +5,12 @@ from google.appengine.ext import ndb
 class Page(ndb.Model):
     name = ndb.StringProperty()
     content = ndb.StringProperty(indexed=False)
+    content_html = ndb.StringProperty(indexed=False)
+    description = ndb.StringProperty(indexed=False)
+    keywords = ndb.StringProperty(indexed=False)
     template = ndb.StringProperty()
     file_content = ndb.BlobProperty()
     file_type = ndb.StringProperty()
-    children = ndb.StringProperty(repeated=True)
     created_on = ndb.DateTimeProperty(auto_now=True)
 
     def to_props(self):

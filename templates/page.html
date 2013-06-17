@@ -2,26 +2,32 @@
 {% autoescape true %}
 <html>
 <head>
-    <title>GAE Site</title> <!-- TODO get name from entity -->
+    <title>{{ page.name }}</title>
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    @ if page.description
+    <meta name="description" content="{{page.description}}">
+    @ endif
+    @ if page.keywords
+    <meta name="keywords" content="{{page.keywords}}">
+    @ endif
 </head>
 <body>
 <div class="navbar navbar-inverse navbar-static-top">
     <div class="navbar-inner">
-        <div class="brand">{{ name }}</div> <!--TODO fix hover-->
+        <div class="brand">{{ site_name }}</div> <!--TODO fix hover-->
         <ul class="nav">
-            {% for name, id in menu %}
+            @ for name, id in menu
+            <li class="divider-vertical"></li>
             <li>
                 <a href="/{{id}}">
                     {{name}}
                 </a>
             </li>
-            <li class="divider-vertical"></li>
-            {% endfor %}
+            @ endfor
         </ul>
     </div>
 </div>
-{{page.content}}
+{{page.content_html}}
 </body>
 </html>
 {% endautoescape %}

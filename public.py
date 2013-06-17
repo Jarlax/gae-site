@@ -6,6 +6,7 @@ from model import Page
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader('templates'),
     extensions=['jinja2.ext.autoescape'])
+JINJA_ENVIRONMENT.line_statement_prefix = '@'
 
 
 class PublicHandler(webapp2.RequestHandler):
@@ -20,7 +21,7 @@ class PublicHandler(webapp2.RequestHandler):
         if page_id:
             page = Page.get_by_id(page_id, parent=self.master_page_key)
         values = {
-            'name': 'GAE Site',
+            'site_name': 'GAE Site',
             'menu': menu_pages,
             'page': page
         }
