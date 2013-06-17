@@ -25,6 +25,7 @@ Admin = ($scope, $http) ->
       headers:
         'Content-Type': false
       transformRequest: (data) ->
+        data.page.content_html = $scope.converter.makeHtml(data.page.content || '')
         formData = new FormData()
         formData.append 'data', angular.toJson data.page
         if data.file
