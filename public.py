@@ -12,10 +12,10 @@ class PublicHandler(webapp2.RequestHandler):
     master_page_key = ndb.Key(Page, 'master')
 
     def get(self, page_id=''):
-        menu_pages = Page.query(ancestor=self.master_page_key)\
-            .fetch(projection=[Page.name])
+        menu_pages = [(p.name, p.key.string_id())
+                      for p in Page.query(ancestor=self.master_page_key).fetch(projection=[Page.name])]
         if not page_id and menu_pages:
-            page_id = menu_pages[0].key.string_id()
+            _, page_id = menu_pages[0]
         page = Page()  # Empty object
         if page_id:
             page = Page.get_by_id(page_id, parent=self.master_page_key)

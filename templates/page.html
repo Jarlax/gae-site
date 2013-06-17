@@ -10,10 +10,10 @@
     <div class="navbar-inner">
         <div class="brand">{{ name }}</div> <!--TODO fix hover-->
         <ul class="nav">
-            {% for page in menu %}
+            {% for name, id in menu %}
             <li>
-                <a href="/{{page.key.string_id()}}">
-                    {{page.name}}
+                <a href="/{{id}}">
+                    {{name}}
                 </a>
             </li>
             <li class="divider-vertical"></li>
