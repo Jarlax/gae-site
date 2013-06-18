@@ -29,7 +29,7 @@ class PublicHandler(webapp2.RequestHandler):
         self.response.write(template.render(values))
 
     def get_file(self, file_id):
-        page = Page.get_by_id(file_id)
+        page = Page.get_by_id(file_id, parent=self.master_page_key)
         if page and page.file_content:
             self.response.headers['Content-Type'] = str(page.file_type)
             self.response.write(page.file_content)
