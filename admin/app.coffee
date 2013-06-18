@@ -1,5 +1,16 @@
 @file_obj = null
 
+@drag = (ev) ->
+  ev.dataTransfer.setData "Text", "![](/file/" + ev.target.id + ")"
+
+@drop = (ev) ->
+  ev.preventDefault()
+  el = ev.target
+  el.value += ev.dataTransfer.getData "Text"
+
+@allowDrop = (ev) ->
+  ev.preventDefault()
+
 Admin = ($scope, $http) ->
   $scope.converter = new Showdown.converter();
   $scope.templates =
