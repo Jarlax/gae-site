@@ -1,5 +1,4 @@
-from admin import AdminHandler
-from public import PublicHandler
+from handlers import AdminHandler, PublicHandler
 import webapp2
 
 name_pattern = '[_a-z0-9]+'  # Name pattern
