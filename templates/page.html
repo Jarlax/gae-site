@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% autoescape true %}
+@ import 'admin_macro.html' as adm
 <html>
 <head>
     <title>{{ page.name }}</title>
@@ -16,20 +16,17 @@
     <div class="navbar-inner">
         <div class="brand">{{ site_name }}</div> <!--TODO fix hover-->
         <ul class="nav">
+            {{ adm.menu_add(is_admin, master_id, 1) }}
             @ for name, id in menu
             <li class="divider-vertical"></li>
             <li>
-                <a href="/{{id}}">
-                    {{name}}
-                </a>
+                <a href="/{{id}}">{{name}}</a>
             </li>
+            {{ adm.menu_add(is_admin, master_id, 1) }}
             @ endfor
         </ul>
     </div>
 </div>
-{% endautoescape %}
 {{page.content_html}}
-{% autoescape true %}
 </body>
 </html>
-{% endautoescape %}

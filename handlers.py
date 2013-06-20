@@ -6,33 +6,34 @@ from google.appengine.ext import ndb
 from mimetypes import guess_type
 from model import Page
 
-JINJA_ENVIRONMENT = jinja2.Environment(
-    loader=jinja2.FileSystemLoader('templates'),
-    extensions=['jinja2.ext.autoescape'])
+JINJA_ENVIRONMENT = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
 JINJA_ENVIRONMENT.line_statement_prefix = '@'
 
 
 class PublicHandler(webapp2.RequestHandler):
-    master_page_key = ndb.Key(Page, 'master')
+    master_id = 'master'
+    master_key = ndb.Key(Page, master_id)
 
     def get(self, page_id=''):
         menu_pages = [(p.name, p.key.string_id())
-                      for p in Page.query(ancestor=self.master_page_key).fetch(projection=[Page.name])]
+                      for p in Page.query(ancestor=self.master_key).fetch(projection=[Page.name])]
         if not page_id and menu_pages:
             _, page_id = menu_pages[0]
         page = Page()  # Empty object
         if page_id:
-            page = Page.get_by_id(page_id, parent=self.master_page_key)
+            page = Page.get_by_id(page_id, parent=self.master_key)
         values = {
             'site_name': 'GAE Site',
             'menu': menu_pages,
-            'page': page
+            'page': page,
+            'is_admin': users.is_current_user_admin(),
+            'master_id': self.master_id
         }
         template = JINJA_ENVIRONMENT.get_template('page.html')
         self.response.write(template.render(values))
 
     def get_file(self, file_id):
-        page = Page.get_by_id(file_id, parent=self.master_page_key)
+        page = Page.get_by_id(file_id, parent=self.master_key)
         if page and page.file_content:
             self.response.headers['Content-Type'] = str(page.file_type)
             self.response.write(page.file_content)
@@ -42,6 +43,9 @@ class PublicHandler(webapp2.RequestHandler):
 
 class AdminHandler(webapp2.RequestHandler):
     master_page_key = ndb.Key(Page, 'master')
+
+    def add_page(self, parent_id='', order_num=''):
+        self.response.write(parent_id + ' ' + order_num)
 
     def get(self, page_id):
         page = Page.get_by_id(page_id, parent=self.master_page_key)

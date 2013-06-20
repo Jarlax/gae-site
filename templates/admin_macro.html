@@ -1,0 +1,10 @@
+@ macro menu_add(is_admin, master_id, order_num)
+@ if is_admin:
+    <li class="divider-vertical"></li>
+    <li>
+        <a href="/_add/{{master_id}}/{{order_num}}" title="Add new page">
+            <i class="icon-white icon-plus-sign"></i>
+        </a>
+    </li>
+@ endif
+@ endmacro
