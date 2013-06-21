@@ -3,6 +3,9 @@
 <html>
 <head>
     <title>{{ page.name }}</title>
+    @ if is_admin:
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.5/angular.min.js"></script>
+    @ endif
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
     @ if page.description
     <meta name="description" content="{{page.description}}">
@@ -25,6 +28,7 @@
             {{ adm.menu_add(is_admin, master_id, 1) }}
             @ endfor
         </ul>
+        {{ adm.menu_logout(is_admin, logout_url) }}
     </div>
 </div>
 {{page.content_html}}

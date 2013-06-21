@@ -27,7 +27,8 @@ class PublicHandler(webapp2.RequestHandler):
             'menu': menu_pages,
             'page': page,
             'is_admin': users.is_current_user_admin(),
-            'master_id': self.master_id
+            'master_id': self.master_id,
+            'logout_url': users.create_logout_url('/')
         }
         template = JINJA_ENVIRONMENT.get_template('page.html')
         self.response.write(template.render(values))
