@@ -2,7 +2,9 @@
 @ import 'admin_macro.html' as adm
 <html>
 <head>
+    @ if page.name
     <title>{{ page.name }}</title>
+    @ endif
     @ if is_admin:
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.5/angular.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
