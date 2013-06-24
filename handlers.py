@@ -8,6 +8,8 @@ from model import Page
 
 JINJA_ENVIRONMENT = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
 JINJA_ENVIRONMENT.line_statement_prefix = '@'
+JINJA_ENVIRONMENT.globals['is_admin'] = users.is_current_user_admin
+JINJA_ENVIRONMENT.globals['logout_url'] = lambda: users.create_logout_url('/')
 
 
 class PublicHandler(webapp2.RequestHandler):
@@ -26,9 +28,7 @@ class PublicHandler(webapp2.RequestHandler):
             'site_name': 'GAE Site',
             'menu': menu_pages,
             'page': page,
-            'is_admin': users.is_current_user_admin(),
-            'master_id': self.master_id,
-            'logout_url': users.create_logout_url('/')
+            'master_id': self.master_id
         }
         template = JINJA_ENVIRONMENT.get_template('page.html')
         self.response.write(template.render(values))

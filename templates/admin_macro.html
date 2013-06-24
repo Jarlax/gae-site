@@ -1,5 +1,5 @@
-@ macro menu_add(is_admin, master_id, order_num)
-@ if is_admin:
+@ macro menu_add(master_id, order_num)
+@ if is_admin():
     <li class="divider-vertical"></li>
     <li>
         <a href="/_add/{{master_id}}/{{order_num}}" title="Add new page">
@@ -9,11 +9,11 @@
 @ endif
 @ endmacro
 
-@ macro menu_logout(is_admin, logout_url)
-@ if is_admin:
+@ macro menu_logout()
+@ if is_admin():
     <ul class="nav pull-right">
         <li>
-            <a href="{{logout_url}}">
+            <a href="{{logout_url()}}">
                 <i class="icon-share icon-white"></i> Log Out
             </a>
         </li>

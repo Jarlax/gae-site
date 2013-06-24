@@ -2,10 +2,8 @@
 @ import 'admin_macro.html' as adm
 <html>
 <head>
-    @ if page.name
-    <title>{{ page.name }}</title>
-    @ endif
-    @ if is_admin:
+    <title>{{ page.name if page.name else site_name }}</title>
+    @ if is_admin():
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.5/angular.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.2/coffee-script.min.js"></script>
@@ -23,16 +21,16 @@
     <div class="navbar-inner">
         <div class="brand">{{ site_name }}</div> <!--TODO fix hover-->
         <ul class="nav">
-            {{ adm.menu_add(is_admin, master_id, 1) }}
+            {{ adm.menu_add(master_id, 1) }}
             @ for name, id in menu
             <li class="divider-vertical"></li>
             <li>
                 <a href="/{{id}}">{{name}}</a>
             </li>
-            {{ adm.menu_add(is_admin, master_id, 1) }}
+            {{ adm.menu_add(master_id, 1) }}
             @ endfor
         </ul>
-        {{ adm.menu_logout(is_admin, logout_url) }}
+        {{ adm.menu_logout() }}
     </div>
 </div>
 {{page.content_html}}
