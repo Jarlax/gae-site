@@ -7,6 +7,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.5/angular.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.2/coffee-script.min.js"></script>
+    <script type="text/coffeescript" src="app.coffee"></script>
     @ endif
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
     @ if page.description
@@ -16,7 +17,7 @@
     <meta name="keywords" content="{{page.keywords}}">
     @ endif
 </head>
-<body>
+<body ng-controller="Admin">
 <div class="navbar navbar-inverse navbar-static-top">
     <div class="navbar-inner">
         <div class="brand">{{ site_name }}</div> <!--TODO fix hover-->

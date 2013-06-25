@@ -1,10 +1,27 @@
-@ macro menu_add(master_id, order_num)
+@ macro menu_add(master_id, ord)
 @ if is_admin():
     <li class="divider-vertical"></li>
-    <li>
-        <a href="/_add/{{master_id}}/{{order_num}}" title="Add new page">
+    <li class="dropdown" ng-class="{open: open{{ord}}}">
+        <a href="#" ng-click="open{{ord}} = !open{{ord}}">
             <i class="icon-white icon-plus-sign"></i>
         </a>
+        <ul class="dropdown-menu">
+            <li>
+                <a href="/_add/{{master_id}}/{{ord}}">
+                    <i class="icon-pencil"></i> New text post
+                </a>
+            </li>
+            <li>
+                <a href="/_add/{{master_id}}/{{ord}}">
+                    <i class="icon-th-list"></i> New post collection
+                </a>
+            </li>
+            <li>
+                <a href="/_add/{{master_id}}/{{ord}}">
+                    <i class="icon-th-large"></i> New image collection
+                </a>
+            </li>
+        </ul>
     </li>
 @ endif
 @ endmacro
