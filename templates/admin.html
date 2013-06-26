@@ -1,0 +1,26 @@
+@ extends "public.html"
+
+@ block head
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.5/angular.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.2/coffee-script.min.js"></script>
+<script type="text/coffeescript" src="app.coffee"></script>
+{{ super() }}
+@ endblock
+
+@ block menu
+<ul class="nav">
+    {{ m.menu_add(master_id, 0) }}
+    @ for name, id in menu
+    {{ m.menu_page(id, name) }}
+    {{ m.menu_add(master_id, loop.index) }}
+    @ endfor
+</ul>
+<ul class="nav pull-right">
+    <li>
+        <a href="{{logout_url()}}">
+            <i class="icon-share icon-white"></i> Log Out
+        </a>
+    </li>
+</ul>
+@ endblock
