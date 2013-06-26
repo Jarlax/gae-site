@@ -45,8 +45,10 @@ class PublicHandler(webapp2.RequestHandler):
 class AdminHandler(webapp2.RequestHandler):
     master_page_key = ndb.Key(Page, 'master')
 
-    def add_page(self, parent_id='', order_num=''):
-        self.response.write(parent_id + ' ' + order_num)
+    def add_page(self):
+        parent = self.request.params.get('parent', '')
+        order_num = self.request.params.get('order_num', '')
+        self.response.write(parent + ' ' + order_num)
 
     def get(self, page_id):
         page = Page.get_by_id(page_id, parent=self.master_page_key)

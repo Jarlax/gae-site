@@ -11,8 +11,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route(r'/_s/page', AdminHandler, methods=['POST']),
     webapp2.Route(r'/_s/logout-url', AdminHandler, handler_method='log_out_url',
                   methods=['GET']),
-    # TODO Change route
-    webapp2.Route(r'/_add/<parent_id:%s>/<order_num:\d+>' % name_pattern, AdminHandler, handler_method='add_page',
+    webapp2.Route(r'/_add', AdminHandler, handler_method='add_page',
                   methods=['GET']),
     webapp2.Route(r'/file/<file_id:%s>' % name_pattern, PublicHandler,
                   handler_method='get_file', methods=['GET']),
