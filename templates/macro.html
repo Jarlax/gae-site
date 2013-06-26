@@ -1,22 +1,22 @@
 @ macro menu_add(master_id, ord)
 <li class="divider-vertical"></li>
-<li class="dropdown" ng-class="{open: open{{ord}}}">
-    <a href="#" ng-click="open{{ord}} = !open{{ord}}">
+<li class="dropdown" ng-class="{open: open{{ ord }}}">
+    <a href="#" ng-click="open{{ord}} = !open{{ ord }}">
         <i class="icon-white icon-plus-sign"></i>
     </a>
     <ul class="dropdown-menu">
         <li>
-            <a href="/_add/{{master_id}}/{{ord}}">
+            <a href="/_add/{{ master_id }}/{{ ord }}">
                 <i class="icon-pencil"></i> New text post
             </a>
         </li>
         <li>
-            <a href="/_add/{{master_id}}/{{ord}}">
+            <a href="/_add/{{ master_id }}/{{ ord }}">
                 <i class="icon-th-list"></i> New post collection
             </a>
         </li>
         <li>
-            <a href="/_add/{{master_id}}/{{ord}}">
+            <a href="/_add/{{ master_id }}/{{ ord }}">
                 <i class="icon-th-large"></i> New image collection
             </a>
         </li>
@@ -27,6 +27,12 @@
 @ macro menu_page(id, name)
 <li class="divider-vertical"></li>
 <li>
-    <a href="/{{id}}">{{name}}</a>
+    <a href="/{{ id }}">{{ name }}</a>
 </li>
+@ endmacro
+
+@ macro meta(key, val)
+@ if val:
+<meta name="{{ key }}" content="{{ val }}">
+@ endif
 @ endmacro

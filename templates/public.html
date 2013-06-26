@@ -5,12 +5,8 @@
     <title>{{ page.name if page.name else site_name }}</title>
     @ block head
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
-    @ if page.description
-    <meta name="description" content="{{page.description}}">
-    @ endif
-    @ if page.keywords
-    <meta name="keywords" content="{{page.keywords}}">
-    @ endif
+    {{ m.meta("description", page.description) }}
+    {{ m.meta("keywords", page.keywords) }}
     @ endblock
 </head>
 <body ng-controller="Admin">
@@ -26,6 +22,6 @@
         @ endblock
     </div>
 </div>
-{{page.content_html}}
+{{ page.content_html }}
 </body>
 </html>
