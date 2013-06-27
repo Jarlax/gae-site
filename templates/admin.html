@@ -1,4 +1,4 @@
-@ extends "public.html"
+@ extends "master.html"
 
 @ block head
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.5/angular.min.js"></script>
@@ -6,6 +6,12 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.2/coffee-script.min.js"></script>
 <script type="text/coffeescript" src="app.coffee"></script>
 {{ super() }}
+@ endblock
+
+@ block body
+<body ng-controller="Admin">
+{{ super() }}
+</body>
 @ endblock
 
 @ block menu

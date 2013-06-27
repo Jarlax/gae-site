@@ -1,27 +1,15 @@
-<!DOCTYPE html>
-@ import 'macro.html' as m
-<html>
-<head>
-    <title>{{ page.name if page.name else site_name }}</title>
-    @ block head
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
-    {{ m.meta("description", page.description) }}
-    {{ m.meta("keywords", page.keywords) }}
-    @ endblock
-</head>
-<body ng-controller="Admin">
-<div class="navbar navbar-inverse navbar-static-top">
-    <div class="navbar-inner">
-        <div class="brand">{{ site_name }}</div> <!--TODO fix hover-->
-        @ block menu
-        <ul class="nav">
-            @ for name, id in menu
-            {{ m.menu_page(id, name) }}
-            @ endfor
-        </ul>
-        @ endblock
-    </div>
-</div>
-{{ page.content_html }}
+@ extends "master.html"
+
+@ block body
+<body>
+{{ super() }}
 </body>
-</html>
+@ endblock
+
+@ block menu
+<ul class="nav">
+    @ for name, id in menu
+    {{ m.menu_page(id, name) }}
+    @ endfor
+</ul>
+@ endblock
