@@ -32,7 +32,7 @@
 @ endmacro
 
 @ macro meta(key, val)
-@ if val:
-<meta name="{{ key }}" content="{{ val }}">
-@ endif
+    @ if val:
+        <meta name="{{ key }}" content="{{ val }}">
+    @ endif
 @ endmacro

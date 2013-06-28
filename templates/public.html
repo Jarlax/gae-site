@@ -2,14 +2,19 @@
 
 @ block body
 <body>
-{{ super() }}
+    {{ super() }}
 </body>
 @ endblock
 
-@ block menu
+@ block menu_items
 <ul class="nav">
     @ for name, id in menu
-    {{ m.menu_page(id, name) }}
+        {{ m.menu_page(id, name) }}
     @ endfor
 </ul>
+@ endblock
+
+@ block main
+    @ bock content
+    @ endblock
 @ endblock

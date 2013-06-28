@@ -10,16 +10,16 @@
 
 @ block body
 <body ng-controller="Admin">
-{{ super() }}
+    {{ super() }}
 </body>
 @ endblock
 
-@ block menu
+@ block menu_items
 <ul class="nav">
     {{ m.menu_add(master_id, 0) }}
     @ for name, id in menu
-    {{ m.menu_page(id, name) }}
-    {{ m.menu_add(master_id, loop.index) }}
+        {{ m.menu_page(id, name) }}
+        {{ m.menu_add(master_id, loop.index) }}
     @ endfor
 </ul>
 <ul class="nav pull-right">
@@ -29,4 +29,9 @@
         </a>
     </li>
 </ul>
+@ endblock
+
+@ block main
+    @ bock edit
+    @ endblock
 @ endblock
