@@ -1,25 +1,20 @@
-@ macro menu_add(master_id, ord)
+@ macro menu_add(parent, ord)
 <li class="divider-vertical"></li>
 <li class="dropdown" ng-class="{open: open{{ ord }}}">
     <a href="#" ng-click="open{{ord}} = !open{{ ord }}">
         <i class="icon-white icon-plus-sign"></i>
     </a>
+    @ set items = [('post', 'New text post', 'icon-pencil'),
+                   ('post_coll', 'New post collection', 'icon-th-list'),
+                   ('img_coll', 'New image collection', 'icon-th-large')]
     <ul class="dropdown-menu">
-        <li>
-            <a href="/_add?parent={{ master_id }}&order_num={{ ord }}">
-                <i class="icon-pencil"></i> New text post
-            </a>
-        </li>
-        <li>
-            <a href="/_add?parent={{ master_id }}&order_num={{ ord }}">
-                <i class="icon-th-list"></i> New post collection
-            </a>
-        </li>
-        <li>
-            <a href="/_add?parent={{ master_id }}&order_num={{ ord }}">
-                <i class="icon-th-large"></i> New image collection
-            </a>
-        </li>
+        @ for type, name, icon in items:
+            <li>
+                <a href="/_add?parent={{ parent }}&order={{ ord }}&type={{ type }}">
+                    <i class="{{ icon }}"></i> {{ name }}
+                </a>
+            </li>
+        @ endfor
     </ul>
 </li>
 @ endmacro
