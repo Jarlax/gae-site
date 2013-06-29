@@ -14,7 +14,8 @@
 Admin = ($scope, $http) ->
   $scope.converter = new Showdown.converter();
   $scope.templates =
-    'text': {title:'Text Post', icon:'icon-pencil'},
+    'post': {title:'Post', icon:'icon-pencil'},
+    'post_coll': {title:'Post Collection', icon:'icon-th-list'},
     'img': {title:'Image', icon:'icon-picture'},
     'img_coll': {title:'Image Collection', icon:'icon-th-large'}
   $http.get('_s/logout-url').success (url) ->
@@ -26,9 +27,9 @@ Admin = ($scope, $http) ->
   list()
   $scope.createPage = (val) ->
     $scope.page =
-      template: val
-  $scope.getIcon = (templ) ->
-    $scope.templates[templ].icon
+      page_type: val
+  $scope.getIcon = (page_type) ->
+    $scope.templates[page_type].icon
   $scope.put = ->
     $http(
       method: 'PUT',

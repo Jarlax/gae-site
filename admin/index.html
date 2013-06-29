@@ -40,7 +40,7 @@
                 <li ng-repeat="page in pages | filter:search">
                     <div class="row-fluid">
                         <div class="span6" id="{{page.id}}" draggable="true" ondragstart="drag(event);">
-                            <i class="icon-black" ng-class="getIcon(page.template)"></i>
+                            <i class="icon-black" ng-class="getIcon(page.page_type)"></i>
                             {{page.name}}
                         </div>
                         <div class="span6 btn-group pagination-right">

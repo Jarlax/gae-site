@@ -9,7 +9,7 @@ class Page(ndb.Model):
     description = ndb.StringProperty(indexed=False)
     keywords = ndb.StringProperty(indexed=False)
     order = ndb.IntegerProperty()
-    template = ndb.StringProperty()
+    page_type = ndb.StringProperty()
     file_content = ndb.BlobProperty()
     file_type = ndb.StringProperty()
     created_on = ndb.DateTimeProperty(auto_now=True)
