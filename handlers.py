@@ -6,32 +6,27 @@ from google.appengine.ext import ndb
 from mimetypes import guess_type
 from model import Page
 
-JINJA_ENVIRONMENT = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
-JINJA_ENVIRONMENT.line_statement_prefix = '@'
-JINJA_ENVIRONMENT.globals['logout_url'] = lambda: users.create_logout_url('/')
+site_name = 'GAE Site'
+master_id = 'master'
+
+JINJA_ENV = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
+JINJA_ENV.line_statement_prefix = '@'
+JINJA_ENV.globals['logout_url'] = lambda: users.create_logout_url('/')
+JINJA_ENV.globals['master_id'] = master_id
 
 
 class PublicHandler(webapp2.RequestHandler):
-    master_id = 'master'
     master_key = ndb.Key(Page, master_id)
 
     def get(self, page_id=''):
-        menu_pages = [(p.name, p.key.string_id())
-                      for p in Page.query(ancestor=self.master_key).fetch(projection=[Page.name])]
-        if not page_id and menu_pages:
-            _, page_id = menu_pages[0]
-        page = Page()  # Empty object
         if page_id:
             page = Page.get_by_id(page_id, parent=self.master_key)
-        values = {
-            'site_name': 'GAE Site',
-            'menu': menu_pages,
-            'page': page,
-            'master_id': self.master_id
-        }
-        template_name = 'admin.html' if users.is_current_user_admin() else 'public.html'
-        template = JINJA_ENVIRONMENT.get_template(template_name)
-        self.response.write(template.render(values))
+        else:
+            page = Page.get_first_child(self.master_key)
+        if page:
+            return self._get_page(page)
+        else:
+            self.error(404)
 
     def get_file(self, file_id):
         page = Page.get_by_id(file_id, parent=self.master_key)
@@ -41,14 +36,35 @@ class PublicHandler(webapp2.RequestHandler):
         else:
             self.error(404)
 
+    def _get_page(self, page):
+        master = 'admin' if users.is_current_user_admin() else 'public'
+        menu_pages = Page.get_children_names(self.master_key)
+        values = {
+            'master': master + '.html',
+            'menu': menu_pages,
+            'page': page,
+            'site_name': site_name
+        }
+        template = JINJA_ENV.get_template(page.page_type + '.html')
+        self.response.write(template.render(values))
+
+
+class AdminHandler1(PublicHandler):
+    def add_page(self):
+        params = self.request.params
+        order = params.get('order', Page.get_children_count(self.master_key))
+        parent = params.get('parent', master_id)
+        type = params.get('type', None)
+        if type:
+            parent_key = ndb.Key(Page, parent)
+            page = Page(parent=parent_key, type=type, order=int(order))
+            self._get_page(page)
+        else:
+            self.error(400)
+
 
 class AdminHandler(webapp2.RequestHandler):
     master_page_key = ndb.Key(Page, 'master')
-
-    def add_page(self):
-        parent = self.request.params.get('parent', '')
-        order_num = self.request.params.get('order_num', '')
-        self.response.write(parent + ' ' + order_num)
 
     def get(self, page_id):
         page = Page.get_by_id(page_id, parent=self.master_page_key)
@@ -60,7 +76,7 @@ class AdminHandler(webapp2.RequestHandler):
     def list(self):
         query = Page.query(ancestor=self.master_page_key)\
             .order(-Page.created_on)\
-            .fetch(projection=[Page.name, Page.created_on, Page.template])
+            .fetch(projection=[Page.name, Page.created_on, Page.page_type])
 
         json_data = json.dumps([p.to_props() for p in query])
         self.response.write(json_data)
