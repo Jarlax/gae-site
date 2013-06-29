@@ -28,3 +28,18 @@ class Page(ndb.Model):
         for v in props:
             setattr(self, v, props[v])
 
+    @staticmethod
+    def get_children_names(parent_key):
+        query = Page.query(ancestor=parent_key).fetch(projection=[Page.name])
+        return [(p.name, p.key.string_id()) for p in query]
+
+    @staticmethod
+    def get_children_count(parent_key):
+        return Page.query(ancestor=parent_key).count()
+
+    @staticmethod
+    def get_first_child(parent_key):
+        return Page.query(ancestor=parent_key).fetch(1)[0]
+
+
+
