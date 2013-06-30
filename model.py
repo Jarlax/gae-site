@@ -40,7 +40,8 @@ class Page(ndb.Model):
 
     @staticmethod
     def get_first_child(parent_key):
-        return Page.query(ancestor=parent_key).fetch(1)[0]
+        res = Page.query(ancestor=parent_key).fetch(1)
+        return res[0] if res else None
 
 
 

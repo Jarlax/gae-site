@@ -26,7 +26,7 @@ class PublicHandler(webapp2.RequestHandler):
         if page:
             return self._get_page(page)
         else:
-            self.error(404)
+            self.redirect('/_add?type=post')
 
     def get_file(self, file_id):
         page = Page.get_by_id(file_id, parent=self.master_key)
@@ -53,11 +53,10 @@ class AdminHandler1(PublicHandler):
     def add_page(self):
         params = self.request.params
         order = params.get('order', Page.get_children_count(self.master_key))
-        parent = params.get('parent', master_id)
-        type = params.get('type', None)
-        if type:
-            parent_key = ndb.Key(Page, parent)
-            page = Page(parent=parent_key, type=type, order=int(order))
+        parent = ndb.Key(Page, params.get('parent', master_id))
+        page_type = params.get('type', None)
+        if page_type:
+            page = Page(parent=parent, page_type=page_type, order=int(order))
             self._get_page(page)
         else:
             self.error(400)
