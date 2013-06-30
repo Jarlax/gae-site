@@ -42,6 +42,3 @@ class Page(ndb.Model):
     def get_first_child(parent_key):
         res = Page.query(ancestor=parent_key).fetch(1)
         return res[0] if res else None
-
-
-
