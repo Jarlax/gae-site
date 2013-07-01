@@ -30,6 +30,13 @@ class Page(ndb.Model):
             setattr(self, v, props[v])
 
     @staticmethod
+    def get_or_create(page_id, parent_key):
+        page = Page.get_by_id(page_id, parent=parent_key)
+        if not page:
+            page = Page(id=page_id, parent=parent_key)
+        return page
+
+    @staticmethod
     def get_children_names(parent_key):
         query = Page.query(ancestor=parent_key).fetch(projection=[Page.name])
         return [(p.name, p.key.string_id()) for p in query]

@@ -13,6 +13,8 @@ app = webapp2.WSGIApplication([
                   methods=['GET']),
     webapp2.Route(r'/_add', AdminHandler1, handler_method='add_page',
                   methods=['GET']),
+    webapp2.Route(r'/_save', AdminHandler1, handler_method='save',
+                  methods=['POST']),
     webapp2.Route(r'/file/<file_id:%s>' % name_pattern, PublicHandler,
                   handler_method='get_file', methods=['GET']),
     webapp2.Route(r'/<page_id:%s>' % name_pattern, PublicHandler,

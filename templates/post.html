@@ -5,33 +5,46 @@
 @ endblock
 
 @ block edit
-<form class="well" accept-charset="utf-8" method="post">
+<form class="well" accept-charset="utf-8" method="post" action="/_save">
+    <input type="hidden" name="page_type" value="{{ page.page_type }}" />
     <fieldset>
         <div class="row-fluid">
             <div class="span4">
                 <label>
-                    <input placeholder="Page name"
-                           name="name" class="input-block-level" required/>
+                    <input placeholder="Page name" name="name" required
+                           class="input-block-level" value="{{ page.name }}"/>
                 </label>
             </div>
             <div class="span4">
                 <label>
-                    <input placeholder="Page unique identifier"
-                           name="id" class="input-block-level" required/>
+                    @ if page.key.string_id():
+                    <input type="hidden" name="id"
+                           value="{{ page.key.string_id() }}"/>
+                    <input value="{{ page.key.string_id() }}"
+                           disabled class="input-block-level"
+                           title="You cannot change page id after creation"/>
+                    @ else:
+                    <input placeholder="Page unique identifier" name="id"
+                           required class="input-block-level"
+                           value="{{ page.key.string_id() }}"/>
+                    @ endif
                 </label>
             </div>
             <div class="span4">
                 <label>
                     <input placeholder="Comma separated keywords"
-                           name="keywords" class="input-block-level"/>
+                           name="keywords" class="input-block-level"
+                           value="{{ page.keywords }}"/>
                 </label>
             </div>
         </div>
         <div class="row-fluid">
             <div class="span12">
                 <label>
-                    <textarea placeholder="A page's description meta tag gives Google and other search engines a summary of what the page is about"
-                              name="description" class="input-block-level"></textarea>
+                    <textarea placeholder="A page's description meta tag gives
+                              Google and other search engines a summary of what
+                              the page is about" name="description"
+                              class="input-block-level">{{ page.description }}</textarea>
                 </label>
             </div>
         </div>
@@ -39,7 +52,8 @@
             <div class="span12">
                 <label>
                     <textarea placeholder="Page Content" ng-model="content"
-                              name="content" class="input-block-level" rows="8"></textarea>
+                              name="content" class="input-block-level"
+                              rows="8">{{ page.content }}</textarea>
                 </label>
             </div>
         </div>

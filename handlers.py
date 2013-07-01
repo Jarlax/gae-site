@@ -48,18 +48,31 @@ class PublicHandler(webapp2.RequestHandler):
         template = JINJA_ENV.get_template(page.page_type + '.html')
         self.response.write(template.render(values))
 
+    def _url_for(self, page):
+        return '/'  # TODO implement
+
 
 class AdminHandler1(PublicHandler):
     def add_page(self):
         params = self.request.params
         order = params.get('order', Page.get_children_count(self.master_key))
-        parent = ndb.Key(Page, params.get('parent', master_id))
+        parent = self._get_parent_key()
         page_type = params.get('type', None)
         if page_type:
             page = Page(parent=parent, page_type=page_type, order=int(order))
             self._get_page(page)
         else:
             self.error(400)
+
+    def save(self):
+        params = self.request.params
+        page = Page.get_or_create(params.get('id'), self._get_parent_key())
+        page.mergeProps(params)
+        page.put()
+        self.redirect(self._url_for(page))
+
+    def _get_parent_key(self):
+        return ndb.Key(Page, self.request.params.get('parent', master_id))
 
 
 class AdminHandler(webapp2.RequestHandler):

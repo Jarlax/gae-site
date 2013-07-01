@@ -15,7 +15,7 @@ handlers:
   upload: admin/app.coffee
   login: admin
 
-- url: /(_s|_add)/?.*
+- url: /(_s|_add|_save)/?.*
   script: main.app
   login: admin
 
