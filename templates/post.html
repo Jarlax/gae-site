@@ -5,25 +5,25 @@
 @ endblock
 
 @ block edit
-<form name="form" class="well" accept-charset="utf-8">
+<form class="well" accept-charset="utf-8" method="post">
     <fieldset>
         <div class="row-fluid">
             <div class="span4">
                 <label>
-                    <input name="name" class="input-block-level" required
-                           placeholder="Page name"/>
+                    <input placeholder="Page name"
+                           name="name" class="input-block-level" required/>
                 </label>
             </div>
             <div class="span4">
                 <label>
-                    <input name="id" class="input-block-level" required
-                           placeholder="Page unique identifier" />
+                    <input placeholder="Page unique identifier"
+                           name="id" class="input-block-level" required/>
                 </label>
             </div>
             <div class="span4">
                 <label>
-                    <input name="keywords" class="input-block-level"
-                           placeholder="Comma separated keywords"/>
+                    <input placeholder="Comma separated keywords"
+                           name="keywords" class="input-block-level"/>
                 </label>
             </div>
         </div>
@@ -38,7 +38,7 @@
         <div class="row-fluid">
             <div class="span12">
                 <label>
-                    <textarea placeholder="Page Content"
+                    <textarea placeholder="Page Content" ng-model="content"
                               name="content" class="input-block-level" rows="8"></textarea>
                 </label>
             </div>
@@ -52,4 +52,6 @@
         </div>
     </fieldset>
 </form>
+<div ng-bind-html-unsafe="converter.makeHtml(content || '')">
+</div>
 @ endblock
