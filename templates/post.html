@@ -12,7 +12,7 @@
             <div class="span4">
                 <label>
                     <input placeholder="Page name" name="name" required
-                           class="input-block-level" value="{{ page.name }}"/>
+                           class="input-block-level" value="{{ page.name or '' }}"/>
                 </label>
             </div>
             <div class="span4">
@@ -26,7 +26,7 @@
                     @ else:
                     <input placeholder="Page unique identifier" name="id"
                            required class="input-block-level"
-                           value="{{ page.key.string_id() }}"/>
+                           value="{{ page.key.string_id() or '' }}"/>
                     @ endif
                 </label>
             </div>
@@ -34,17 +34,16 @@
                 <label>
                     <input placeholder="Comma separated keywords"
                            name="keywords" class="input-block-level"
-                           value="{{ page.keywords }}"/>
+                           value="{{ page.keywords or '' }}"/>
                 </label>
             </div>
         </div>
         <div class="row-fluid">
             <div class="span12">
                 <label>
-                    <textarea placeholder="A page's description meta tag gives
-                              Google and other search engines a summary of what
-                              the page is about" name="description"
-                              class="input-block-level">{{ page.description }}</textarea>
+                    <textarea placeholder="A page's description meta tag gives Google and other search engines a summary of what the page is about"
+                              name="description"
+                              class="input-block-level">{{ page.description or '' }}</textarea>
                 </label>
             </div>
         </div>
@@ -53,7 +52,7 @@
                 <label>
                     <textarea placeholder="Page Content" ng-model="content"
                               name="content" class="input-block-level"
-                              rows="8">{{ page.content }}</textarea>
+                              rows="8">{{ page.content or '' }}</textarea>
                 </label>
             </div>
         </div>
