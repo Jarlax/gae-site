@@ -6,6 +6,9 @@
 
 @ block edit
 <form class="well" accept-charset="utf-8" method="post" action="/_save">
+    <input type="hidden" name="content_html"
+           ng-bind-html-unsafe="converter.makeHtml(content || '')"/>
+    @ autoescape true
     <input type="hidden" name="page_type" value="{{ page.page_type }}" />
     <fieldset>
         <div class="row-fluid">
@@ -51,8 +54,9 @@
             <div class="span12">
                 <label>
                     <textarea placeholder="Page Content" ng-model="content"
+                              ng-init="content = '{{ (page.content or '')|q }}'"
                               name="content" class="input-block-level"
-                              rows="8">{{ page.content or '' }}</textarea>
+                              rows="8"></textarea>
                 </label>
             </div>
         </div>
@@ -64,6 +68,7 @@
             </div>
         </div>
     </fieldset>
+    @ endautoescape
 </form>
 <div ng-bind-html-unsafe="converter.makeHtml(content || '')">
 </div>

@@ -9,8 +9,10 @@ from model import Page
 site_name = 'GAE Site'
 master_id = 'master'
 
-JINJA_ENV = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
+JINJA_ENV = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'),
+                               extensions=['jinja2.ext.autoescape'])
 JINJA_ENV.line_statement_prefix = '@'
+JINJA_ENV.filters['q'] = lambda(value): value.replace('\'', '\\\'')
 JINJA_ENV.globals['logout_url'] = lambda: users.create_logout_url('/')
 JINJA_ENV.globals['master_id'] = master_id
 
