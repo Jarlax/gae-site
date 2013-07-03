@@ -27,7 +27,10 @@ class Page(ndb.Model):
 
     def mergeProps(self, props):
         for v in props:
-            setattr(self, v, props[v])
+            if v == 'order':
+                setattr(self, v, int(props[v]))
+            else:
+                setattr(self, v, props[v])
 
     @staticmethod
     def get_or_create(page_id, parent_key):
@@ -37,8 +40,13 @@ class Page(ndb.Model):
         return page
 
     @staticmethod
-    def get_children_names(parent_key):
-        query = Page.query(ancestor=parent_key).fetch(projection=[Page.name])
+    def get_children_names(parent_key, by_date=True):
+        query = Page.query(ancestor=parent_key)
+        if by_date:
+            query = query.order(-Page.created_on)
+        else:
+            query = query.order(-Page.order)
+        query = query.fetch(projection=[Page.name])
         return [(p.name, p.key.string_id()) for p in query]
 
     @staticmethod
@@ -49,3 +57,10 @@ class Page(ndb.Model):
     def get_first_child(parent_key):
         res = Page.query(ancestor=parent_key).fetch(1)
         return res[0] if res else None
+
+    @staticmethod
+    def inc_order_number(parent_key, start):
+        pages = Page.query(Page.order >= start, ancestor=parent_key)
+        for page in pages:
+            page.order += 1
+            page.put()

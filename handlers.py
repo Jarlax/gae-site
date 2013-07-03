@@ -40,7 +40,7 @@ class PublicHandler(webapp2.RequestHandler):
 
     def _get_page(self, page):
         master = 'admin' if users.is_current_user_admin() else 'public'
-        menu_pages = Page.get_children_names(self.master_key)
+        menu_pages = Page.get_children_names(self.master_key, False)
         values = {
             'master': master + '.html',
             'menu': menu_pages,
@@ -70,6 +70,8 @@ class AdminHandler1(PublicHandler):
         params = self.request.params
         page = Page.get_or_create(params.get('id'), self._get_parent_key())
         page.mergeProps(params)
+        if page.order:
+            Page.inc_order_number(self._get_parent_key(), page.order)
         page.put()
         self.redirect(self._url_for(page))
 
