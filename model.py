@@ -45,7 +45,7 @@ class Page(ndb.Model):
         if by_date:
             query = query.order(-Page.created_on)
         else:
-            query = query.order(-Page.order)
+            query = query.order(Page.order)
         query = query.fetch(projection=[Page.name])
         return [(p.name, p.key.string_id()) for p in query]
 
