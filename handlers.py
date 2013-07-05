@@ -24,7 +24,7 @@ class PublicHandler(webapp2.RequestHandler):
         if page_id:
             page = Page.get_by_id(page_id, parent=self.master_key)
         else:
-            page = Page.get_first_child(self.master_key)
+            page = Page.get_first_child(self.master_key, False)
         if page:
             return self._get_page(page)
         else:
@@ -42,6 +42,7 @@ class PublicHandler(webapp2.RequestHandler):
         master = 'admin' if users.is_current_user_admin() else 'public'
         menu_pages = Page.get_children_names(self.master_key, False)
         values = {
+            'id': page.key.string_id(),
             'master': master + '.html',
             'menu': menu_pages,
             'page': page,
@@ -50,7 +51,7 @@ class PublicHandler(webapp2.RequestHandler):
         template = JINJA_ENV.get_template(page.page_type + '.html')
         self.response.write(template.render(values))
 
-    def _url_for(self, page):
+    def _redirect_url(self, page=None):
         return '/'  # TODO implement
 
 
@@ -66,13 +67,22 @@ class AdminHandler1(PublicHandler):
         else:
             self.error(400)
 
+    def delete_page(self, page_id):
+        page = Page.get_by_id(page_id, parent=self.master_key)
+        if page:
+            Page.dec_order_number(self.master_key, page.order)
+            page.key.delete()
+            self.redirect(self._redirect_url())
+        else:
+            self.error(404)
+
     def save(self):
         params = self.request.params
         page = Page.get_or_create(params.get('id'), self._get_parent_key())
         page.mergeProps(params)
         Page.inc_order_number(self._get_parent_key(), page.order)
         page.put()
-        self.redirect(self._url_for(page))
+        self.redirect(self._redirect_url(page))
 
     def _get_parent_key(self):
         return ndb.Key(Page, self.request.params.get('parent', master_id))

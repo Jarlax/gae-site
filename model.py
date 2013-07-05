@@ -54,8 +54,13 @@ class Page(ndb.Model):
         return Page.query(ancestor=parent_key).count()
 
     @staticmethod
-    def get_first_child(parent_key):
-        res = Page.query(ancestor=parent_key).fetch(1)
+    def get_first_child(parent_key, by_date=True):
+        query = Page.query(ancestor=parent_key)
+        if by_date:
+            query = query.order(-Page.created_on)
+        else:
+            query = query.order(Page.order)
+        res = query.fetch(1)
         return res[0] if res else None
 
     @staticmethod
@@ -63,4 +68,11 @@ class Page(ndb.Model):
         pages = Page.query(Page.order >= start, ancestor=parent_key)
         for page in pages:
             page.order += 1
+            page.put()
+
+    @staticmethod
+    def dec_order_number(parent_key, start):
+        pages = Page.query(Page.order >= start, ancestor=parent_key)
+        for page in pages:
+            page.order -= 1
             page.put()

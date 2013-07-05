@@ -58,7 +58,10 @@
         <div class="row-fluid">
             <div class="span12">
                 <div class="btn-group pull-right">
-                    <button class="btn btn-primary">Save</button>
+                    @ if id:
+                    <button type="submit" formaction="/_delete/{{ id }}" class="btn btn-danger">Delete</button>
+                    @ endif
+                    <button type="submit" formaction="/_save" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </div>
