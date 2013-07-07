@@ -76,6 +76,14 @@ class AdminHandler1(PublicHandler):
         else:
             self.error(404)
 
+    def get_menu(self):
+        menu_pages = Page.get_children_names(self.master_key, False)
+        values = {
+            'menu': menu_pages,
+        }
+        template = JINJA_ENV.get_template('adm_menu_items.html')
+        self.response.write(template.render(values))
+
     def save(self):
         params = self.request.params
         page = Page.get_or_create(params.get('id'), self._get_parent_key())

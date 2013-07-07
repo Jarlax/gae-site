@@ -15,12 +15,7 @@
 @ endblock
 
 @ block menu_items
-<ul class="nav">
-    {{ m.menu_add(master_id, 0) }}
-    @ for name, id in menu
-        {{ m.menu_page(id, name) }}
-        {{ m.menu_add(master_id, loop.index) }}
-    @ endfor
+<ul class="nav" ng-bind-html-unsafe="menu">
 </ul>
 <ul class="nav pull-right">
     <li>

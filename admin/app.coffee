@@ -20,6 +20,10 @@ Admin = ($scope, $http) ->
     'img_coll': {title:'Image Collection', icon:'icon-th-large'}
   $http.get('_s/logout-url').success (url) ->
     $scope.logout_url = url
+  load_menu = ->
+    $http.get('_menu').success (html) ->
+      $scope.menu = html
+  load_menu()
   list = ->
     $http.get('_s/pages').success (data) ->
       $scope.pages = data
