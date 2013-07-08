@@ -1,4 +1,3 @@
-import json
 from google.appengine.ext import ndb
 
 
@@ -13,17 +12,6 @@ class Page(ndb.Model):
     file_content = ndb.BlobProperty()
     file_type = ndb.StringProperty()
     created_on = ndb.DateTimeProperty(auto_now=True)
-
-    def to_props(self):
-        exclude_props = ['file_content', 'file_type', 'created_on']
-        props = self.to_dict(exclude=exclude_props)
-        props['created_date'] = str(self.created_on.date())
-        if self.key:
-            props['id'] = self.key.string_id()
-        return props
-
-    def toJson(self):
-        return json.dumps(self.to_props())
 
     def mergeProps(self, props):
         for v in props:

@@ -5,17 +5,12 @@ api_version: 1
 threadsafe: yes
 
 handlers:
-- url: /_a
-  static_files: admin/index.html
-  upload: admin/index.html
-  login: admin
-
 - url: /app.coffee
   static_files: admin/app.coffee
   upload: admin/app.coffee
   login: admin
 
-- url: /(_s|_add|_save|_delete|_menu)/?.*
+- url: /(_add|_save|_delete|_menu)/?.*
   script: main.app
   login: admin
 
