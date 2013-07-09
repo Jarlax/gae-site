@@ -15,7 +15,31 @@
 @ endblock
 
 @ block menu_items
-<ul class="nav" ng-bind-html-unsafe="menu">
+<ul class="nav">
+    @ for name, id in menu
+    <li class="divider-vertical"></li>
+    <li jx-drag-data="{{ id }}" jx-drop="drop" jx-drop-data="{{ id }}">
+        <a href="/{{ id }}">{{ name }}</a>
+    </li>
+    @ endfor
+    <li class="divider-vertical"></li>
+    <li class="dropdown" ng-class="{ open: open }">
+        <a href="#" ng-click="open = !open">
+            <i class="icon-white icon-plus-sign"></i>
+        </a>
+        @ set items = [('post', 'New text post', 'icon-pencil'),
+                       ('post_coll', 'New post collection', 'icon-th-list'),
+                       ('img_coll', 'New image collection', 'icon-th-large')]
+        <ul class="dropdown-menu">
+            @ for type, name, icon in items:
+            <li>
+                <a href="/_add?type={{ type }}&order={{ menu | length }}">
+                    <i class="{{ icon }}"></i> {{ name }}
+                </a>
+            </li>
+            @ endfor
+        </ul>
+    </li>
 </ul>
 <ul class="nav pull-right">
     <li>

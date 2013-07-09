@@ -10,7 +10,7 @@ app = webapp2.WSGIApplication([
                   handler_method='delete_page', methods=['POST']),
     webapp2.Route(r'/_save', AdminHandler, handler_method='save',
                   methods=['POST']),
-    webapp2.Route(r'/_menu', AdminHandler, handler_method='get_menu',
+    webapp2.Route(r'/_exchange', AdminHandler, handler_method='exchange',
                   methods=['GET']),
     webapp2.Route(r'/file/<file_id:%s>' % name_pattern, PublicHandler,
                   handler_method='get_file', methods=['GET']),

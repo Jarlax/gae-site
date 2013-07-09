@@ -74,14 +74,6 @@ class AdminHandler(PublicHandler):
         else:
             self.error(404)
 
-    def get_menu(self):
-        menu_pages = Page.get_children_names(self.master_key, False)
-        values = {
-            'menu': menu_pages,
-        }
-        template = JINJA_ENV.get_template('adm_menu_items.html')
-        self.response.write(template.render(values))
-
     def save(self):
         params = self.request.params
         page = Page.get_or_create(params.get('id'), self._get_parent_key())
@@ -89,6 +81,14 @@ class AdminHandler(PublicHandler):
         Page.inc_order_number(self._get_parent_key(), page.order)
         page.put()
         self.redirect(self._redirect_url(page))
+
+    def exchange(self):
+        params = self.request.params
+        page1 = Page.get_by_id(params.get('page1'), parent=self.master_key)
+        page2 = Page.get_by_id(params.get('page2'), parent=self.master_key)
+        page1.order, page2.order = page2.order, page1.order
+        page1.put()
+        page2.put()
 
     def _get_parent_key(self):
         return ndb.Key(Page, self.request.params.get('parent', master_id))

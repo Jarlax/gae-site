@@ -1,6 +1,0 @@
-@ import 'macro.html' as m
-{{ m.menu_add(master_id, 0) }}
-@ for name, id in menu
-    {{ m.menu_page(id, name) }}
-    {{ m.menu_add(master_id, loop.index) }}
-@ endfor
