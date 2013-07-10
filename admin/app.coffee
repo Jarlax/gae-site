@@ -28,15 +28,17 @@ DropDirective = ->
       scope.dropTarget = dropTarget
       scope[handler]? dragData, dropData
 
-Admin = ($scope, $http) ->
+Admin = ($scope, $http, $timeout) ->
   $scope.converter = new Showdown.converter()
 
   $scope.drop = (from_id, to_id) ->
     from = $scope.dragTarget
     to = $scope.dropTarget
     if from != to && from_id && to_id
-      $http.get("/_exchange?page1=" + from_id + "&page2=" + to_id).success ->
-        [from.innerHTML, to.innerHTML] = [to.innerHTML, from.innerHTML]
+      $timeout ->
+        $http.get("/_exchange?page1=" + from_id + "&page2=" + to_id).success ->
+          [from.innerHTML, to.innerHTML] = [to.innerHTML, from.innerHTML]
+        , 0.1
 
 # Angular bootstrap
 name = 'AdminPage'

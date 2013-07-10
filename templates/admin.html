@@ -18,7 +18,7 @@
 <ul class="nav">
     @ for name, id in menu
     <li class="divider-vertical"></li>
-    <li jx-drag-data="{{ id }}" jx-drop="drop" jx-drop-data="{{ id }}">
+    <li jx-drag jx-drop="drop" jx-drag-data="{{ id }}" jx-drop-data="{{ id }}">
         <a href="/{{ id }}">{{ name }}</a>
     </li>
     @ endfor
