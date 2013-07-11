@@ -4,13 +4,16 @@ DragDirective = ->
 
     data = attrs.jxDragData
     handler = attrs.jxDrag
+    endhandler = attrs.jxDragEnd
 
-    scope.$watch attrs.jxDrag, (value) => @handler = value
     element.bind "dragstart", (event) =>
       [dragData, dragTarget] = [data, event.target]
       event.dataTransfer.setData "text", dragData
       scope.dragTarget = dragTarget
       scope[handler]? dragData
+
+    element.bind "dragend", =>
+      scope[endhandler]?()
 
 DropDirective = ->
   (scope, element, attrs) ->
@@ -20,7 +23,6 @@ DropDirective = ->
     data = attrs.jxDragData
     handler = attrs.jxDrop
 
-    scope.$watch attrs.jxDrop, (value) => @handler = value
     element.bind "drop", (event) =>
       event.preventDefault()
       dragData = event.dataTransfer.getData "text"
@@ -30,6 +32,12 @@ DropDirective = ->
 
 Admin = ($scope, $http, $timeout) ->
   $scope.converter = new Showdown.converter()
+
+  $scope.drag = ->
+    $scope.dragging = true
+
+  $scope.dragend = ->
+    $scope.dragging = false
 
   $scope.drop = (from_id, to_id) ->
     from = $scope.dragTarget
