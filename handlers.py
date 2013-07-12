@@ -78,7 +78,8 @@ class AdminHandler(PublicHandler):
         params = self.request.params
         page = Page.get_or_create(params.get('id'), self._get_parent_key())
         page.mergeProps(params)
-        Page.inc_order_number(self._get_parent_key(), page.order)
+        if not page.order:
+            page.order = Page.get_children_count(self.master_key)
         page.put()
         self.redirect(self._redirect_url(page))
 
