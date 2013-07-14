@@ -39,6 +39,10 @@ Admin = ($scope, $http, $timeout) ->
   $scope.dragend = ->
     $scope.dragging = false
 
+  $scope.add_markdown = ->
+    element = document.getElementById "content_html"
+    element.value = $scope.converter.makeHtml($scope.content || '')
+
   $scope.drop = (from_id, to_id) ->
     from = $scope.dragTarget
     to = $scope.dropTarget
